@@ -40,6 +40,7 @@ public class PeliculaServicio {
     List<Pelicula> listaPeliculas = new ArrayList();
     
     Boolean peliculasArchivoAgregadas = false;
+    Integer contador;
     
     public void menuPelicula(){
     
@@ -48,7 +49,11 @@ public class PeliculaServicio {
         System.out.print("MENU PELICULAS.\n\n"
                 + "\t1 - Ingresar Peliculas Disponibles en Archivo.\n"
                 + "\t2 - Ingresar Nuevas Peliculas.\n"
-                + "\t3 - Mostrar el Listado de Peliculas.\n\n"
+                + "\t3 - Mostrar el Listado de Peliculas.\n"
+                + "\t4 - Mostrar Peliculas ATP.\n"
+                + "\t5 - Mostrar Peliculas Adultos.\n\n"
+                + "\t6 - Continuar con la creacion de las Salas.\n"
+                
                 + "Elija opcion: ");
         opcion = leer.next();
         
@@ -77,6 +82,22 @@ public class PeliculaServicio {
                 
                 listadoPeliculas();
                 break;
+                
+            case "4":
+                
+                peliculasATP();
+                break;
+                
+            case "5":
+                
+                peliculasAdultos();
+                break;
+                
+            case "6":
+                
+                //Continuar con la creacion de las Salas
+                break;
+            
                 
             default:
                 
@@ -209,18 +230,53 @@ public class PeliculaServicio {
     
     public void listadoPeliculas(){
         
-        Integer contador = 1;
+        contador = 0;
         
         System.out.println("\nLISTADO DE PELICULAS.\n");
 
-        
         for (Pelicula pelicula : listaPeliculas) {
             
-            System.out.println("Pelicula: "+ contador +", Titulo: "+ pelicula.getTitulo() +", Director: "+ pelicula.getDirector() +", Duracion: "+ pelicula.getDuracionEnMinutos() +" y Edad Minima: "+ pelicula.getEdadMinima() +".");
             contador ++;
-            
+            System.out.println("Pelicula: "+ contador +", Titulo: "+ pelicula.getTitulo() +", Director: "+ pelicula.getDirector() +", Duracion: "+ pelicula.getDuracionEnMinutos() +" y Edad Minima: "+ pelicula.getEdadMinima() +".");
         }
 
         menuPelicula();
+    }
+    
+    public void peliculasATP(){
+        
+        contador = 0;
+        
+        System.out.println("LISTADO DE PELICULAS ATP.");
+        
+        for (Pelicula pelicula : listaPeliculas) {
+            
+            if (pelicula.getEdadMinima() == 0){
+                
+                contador ++;
+                System.out.println("Pelicula: "+ contador +", Titulo: "+ pelicula.getTitulo() +", Director: "+ pelicula.getDirector() +", Duracion: "+ pelicula.getDuracionEnMinutos() +" y Edad Minima: "+ pelicula.getEdadMinima() +".");
+            }
+        }
+    }
+    
+    public void peliculasAdultos(){
+        
+        contador = 0;
+        
+        System.out.println("LISTADO DE PELICULAS ADULTOS.");
+        
+        for (Pelicula pelicula : listaPeliculas) {
+            
+            if (pelicula.getEdadMinima() >= 18){
+                
+                contador ++;
+                System.out.println("Pelicula: "+ contador +", Titulo: "+ pelicula.getTitulo() +", Director: "+ pelicula.getDirector() +", Duracion: "+ pelicula.getDuracionEnMinutos() +" y Edad Minima: "+ pelicula.getEdadMinima() +".");
+            }
+        }
+        
+        if (contador == 0){
+            
+            System.out.println("No hay Peliculas para Adultos en estos momentos.");
+        }
     }
 }
